@@ -10,13 +10,18 @@ use std::io::{BufReader, BufRead};
 
 fn main() {
 
+    // command line args/user input args
+
     let fastq_file = "../test_data/test_fastq.fastq";
+    let telseq = "TAGAG"; 
+
+    // ----------------------------
+
+
     let test_sequences = fastq2hashmap(fastq_file);
-
     // println!("{test_sequences:?}");
-
     for sequence in test_sequences.keys() {
-        let t = telomere_number(&test_sequences[sequence]);
+        let t = telomere_number(&test_sequences[sequence], &telseq);
         println!("{sequence} has {t} telomeric instances");
     }
 }
@@ -42,16 +47,17 @@ fn fastq2hashmap (fastq_file: &str) -> HashMap<String, String> {
 }
 
 
-fn telomere_number (s: &str) -> i32 {
+fn telomere_number (s: &str, telseq: &str) -> i32 {
     let mut telomeric_match = 0;
     let mut revcomp_telomeric_match = 0;
-    for window in s.as_bytes().windows(6) {
+    let window_size = telseq.len();
+    for window in s.as_bytes().windows(window_size) { 
         let window_str = str::from_utf8(window).unwrap();
         // println!("{window_str}");
 
-        if window_str == "TTAGGG" {
+        if window_str == telseq {
             telomeric_match +=1;
-        } else if window_str == revcomp("TTAGGG") {
+        } else if window_str == revcomp(telseq) {
             revcomp_telomeric_match +=1;
         }
     }
