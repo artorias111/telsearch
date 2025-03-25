@@ -37,9 +37,11 @@ fn main() {
 
     let sequences = fastq2hashmap(fastq_file);
     // println!("{test_sequences:?}");
+    // print headers
+    println!("sequence\ttelomere_count");
     for sequence in sequences.keys() {
         let t = telomere_number(&sequences[sequence], &telseq);
-        println!("{sequence} has {t} telomeric instances");
+        println!("{sequence}\t{t}");
     }
 }
 
@@ -56,7 +58,10 @@ fn fastq2hashmap (fastq_file: &str) -> HashMap<String, String> {
             lines.next(),
             lines.next(),
             lines.next(),) {
-        let header_line = header.expect("header missing in the file");
+        let h_line = header
+            .expect("header missing in the file")
+            .replacen("@", "", 1); // clean up the header
+        let header_line = String::from(h_line);
         let sequence = seq.expect("Sequence missing in the file");
         fastq_map.insert(header_line, sequence);
     }
@@ -64,17 +69,17 @@ fn fastq2hashmap (fastq_file: &str) -> HashMap<String, String> {
 }
 
 
-fn telomere_number (s: &str, telseq: &str) -> i32 {
+fn telomere_number (s: &str, telseq: &str) -> i32 { // optimize this function
     let mut telomeric_match = 0;
     let mut revcomp_telomeric_match = 0;
     let window_size = telseq.len();
     for window in s.as_bytes().windows(window_size) { 
         let window_str = str::from_utf8(window).unwrap();
-        // println!("{window_str}");
+        let revcomp_telseq = revcomp(telseq); // reverse complement of the telseq string
 
         if window_str == telseq {
             telomeric_match +=1;
-        } else if window_str == revcomp(telseq) {
+        } else if window_str == revcomp_telseq {
             revcomp_telomeric_match +=1;
         }
     }
