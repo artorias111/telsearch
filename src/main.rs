@@ -7,21 +7,38 @@ use std::collections::HashMap;
 use std::str;
 use std::fs::File;
 use std::io::{BufReader, BufRead};
+use clap::Parser;
+
+#[derive(Parser)]
+struct Args {
+    // Path to the fastq file
+    #[arg(short = 'r', long = "reads")]
+    reads: String, // consider changing this to std::path::PathBuf,
+
+    // telomere sequence to search (default: TTAGGG)
+    #[arg(short = 't', long = "telomere", default_value = "TTAGGG")]
+    telomere: String,
+}
+
 
 fn main() {
+    let args = Args::parse();
+    // println!("test path: {:?}, test telseq {:?}", args.reads, args.telomere);
 
     // command line args/user input args
 
-    let fastq_file = "../test_data/test_fastq.fastq";
-    let telseq = "TAGAG"; 
+    // let _fastq_file = "../test_data/test_fastq.fastq";
+    let fastq_file = &args.reads;
+    // let _telseq = "TAGAG"; 
+    let telseq = &args.telomere;
 
     // ----------------------------
 
 
-    let test_sequences = fastq2hashmap(fastq_file);
+    let sequences = fastq2hashmap(fastq_file);
     // println!("{test_sequences:?}");
-    for sequence in test_sequences.keys() {
-        let t = telomere_number(&test_sequences[sequence], &telseq);
+    for sequence in sequences.keys() {
+        let t = telomere_number(&sequences[sequence], &telseq);
         println!("{sequence} has {t} telomeric instances");
     }
 }
