@@ -8,6 +8,7 @@ use std::str;
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 use clap::Parser;
+use flate2::read::GzDecoder; 
 
 #[derive(Parser)]
 struct Args {
@@ -47,8 +48,9 @@ fn main() {
 
 
 fn fastq2hashmap (fastq_file: &str) -> HashMap<String, String> {
-    let file = File::open(fastq_file).unwrap();
-    let reader = BufReader::new(file);
+    let file = File::open(fastq_file).expect("Failed to open the provided file");
+    // let reader = BufReader::new(file);
+    let reader = BufReader::new(GzDecoder::new(file));
 
     let mut lines = reader.lines();
     let mut fastq_map = HashMap::new();
