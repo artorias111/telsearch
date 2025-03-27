@@ -1,4 +1,4 @@
-Telsearch works on raw sequencing reads of any kind (illumina, PacBio HiFi, ONT, etc.) 
+Telsearch works on raw sequencing reads of any kind (Illumina, PacBio HiFi, ONT, etc.) 
 
 Returns the frequency of a canonical telomere seqeunce in each read. 
 
