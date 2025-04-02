@@ -75,10 +75,11 @@ fn telomere_number (s: &str, telseq: &str) -> i32 { // optimize this function
     let mut telomeric_match = 0;
     let mut revcomp_telomeric_match = 0;
     let window_size = telseq.len();
+    let revcomp_telseq = revcomp(telseq); // reverse complement of the telseq string
+    
     for window in s.as_bytes().windows(window_size) { 
         let window_str = str::from_utf8(window).unwrap();
-        let revcomp_telseq = revcomp(telseq); // reverse complement of the telseq string
-
+        
         if window_str == telseq {
             telomeric_match +=1;
         } else if window_str == revcomp_telseq {
