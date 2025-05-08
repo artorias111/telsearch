@@ -4,7 +4,7 @@ This project is still in heavy testing, and as of now, I've implemented it to ru
 
 Returns the frequency of a canonical telomere seqeunce in each read. 
 
-Example run: (Ensure the `fastq` file is `gz` compressed)
+Example run: (The `fastq` file should be `gz` compressed)
 ```shell
 # with Cargo
 ## clone this reposity
