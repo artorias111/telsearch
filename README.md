@@ -1,6 +1,6 @@
 Telsearch works on raw sequencing reads of any kind (Illumina, PacBio HiFi, ONT, etc.) 
 
-This project is still in heavy testing, and as of now, I've implemented it to run well on a cluster with a lot of memory (>1TB). So use it with caution. 
+This is a rookie project to practice Rust, and as of now, I've implemented it to run well on a cluster with a lot of memory (>1TB). So use it with caution. 
 
 Returns the frequency of a canonical telomere seqeunce in each read. 
 
