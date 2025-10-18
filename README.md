@@ -8,9 +8,6 @@ Returns the frequency of a canonical telomere seqeunce in each read.
 
 Example run: (The `fastq` file should be `gz` compressed)
 ```shell
-# with Cargo
-## clone this reposity
-git clone https://github.com/artorias111/telsearch.git
 ## run with cargo
 cargo run -- --reads path/to/fastq.gz --telomere TTAGGC
 ```
