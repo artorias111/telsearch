@@ -1,6 +1,6 @@
 Telsearch works on raw sequencing reads of any kind (Illumina, PacBio HiFi, ONT, etc.) 
 
-This is a rookie project to practice Rust, and as of now, I've implemented it to run well on a cluster with a lot of memory (>1TB). So use it with caution. 
+This is a rookie project to practice Rust, and as of now, I've implemented it to run well on a cluster with a lot of memory (>1TB (not a typo)). So use it with caution. 
 
 The default mode that currently runs without breaking uses exact string matching to detect a telomere sequence (and its reverse complement). That's a horrible way to detect biological sequences, I plan to include better pairwise alignment algorithms in the future. 
 
